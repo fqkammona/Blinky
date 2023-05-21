@@ -7,7 +7,6 @@
 
 #include <vector>
 
-
 void run();
 
 #endif //BLINKY_MASTER_H

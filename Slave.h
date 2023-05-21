@@ -6,5 +6,6 @@
 #define BLINKY_SLAVE_H
 
 void Slave(int id);
+void delayLong(int number, int id);
 
 #endif //BLINKY_SLAVE_H
