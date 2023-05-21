@@ -16,6 +16,11 @@ extern queue<int> numberQueue;
 extern int total_options_found;
 extern mutex divisibleBy37CountMutex;
 
+extern double ideal_Cycles;
+extern double range_of_cycles;
+
+int cycle = 0;
+
 void Slave(int id) {
     while (true) {
         queueMutex.lock();   // Lock access to the queue
@@ -30,12 +35,21 @@ void Slave(int id) {
         lock_guard<mutex> lock(bufferMutex);  // Automatically locks the mutex
         buffer.push_back(count);                          // Write to the buffer
 
-        delayLong(count, id);
 
+        delayLong(count, id);
         /*for (int i = 0; i <= 256; ++i) {
             delayLong(count, id, i);
         }*/
     }
+}
+
+void delayLong(int count, int id, int r29){
+    /*if (count % 37 == 0) {
+        cout << "Slave " << id << " found a number divisible by 37: " << count << endl;
+        lock_guard<mutex> lock(divisibleBy37CountMutex); // Lock access to the counter
+        ++total_options_found;
+    }*/
+
 }
 
 void delayLong(int count, int id){

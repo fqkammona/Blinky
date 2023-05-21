@@ -34,7 +34,7 @@ int main() {
     cout << "Enter Range of Cycles: ";
     cin >> range_of_cycles;
     cout << endl;
-    
+
     for (int i = 0; i <= 65534; ++i) {
         numberQueue.push(i);
     }
