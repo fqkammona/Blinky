@@ -13,7 +13,7 @@ extern vector<int> buffer;
 extern mutex bufferMutex;
 extern mutex queueMutex;
 extern queue<int> numberQueue;
-extern int divisibleBy37Count;
+extern int total_options_found;
 extern mutex divisibleBy37CountMutex;
 
 void Slave(int id) {
@@ -31,6 +31,10 @@ void Slave(int id) {
         buffer.push_back(count);                          // Write to the buffer
 
         delayLong(count, id);
+
+        /*for (int i = 0; i <= 256; ++i) {
+            delayLong(count, id, i);
+        }*/
     }
 }
 
@@ -38,6 +42,7 @@ void delayLong(int count, int id){
     if (count % 37 == 0) {
         cout << "Slave " << id << " found a number divisible by 37: " << count << endl;
         lock_guard<mutex> lock(divisibleBy37CountMutex); // Lock access to the counter
-        ++divisibleBy37Count;
+        ++total_options_found;
     }
 }
+
