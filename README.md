@@ -13,8 +13,5 @@ Output:
 - R29 : 
 - Count: 
 - High int: 
-- Low int: 
-
-Master
-Slave
-Buffer 
+- Low int:
+- Print out Blinky code 
