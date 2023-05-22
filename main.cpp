@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <vector>
 #include <mutex>
 #include <queue>
@@ -17,7 +18,7 @@ double ideal_Cycles;
 void findNumberOfCycles(double frequency, double ideal_delay_time){
     double oneCycle = 1.00 / frequency;
     ideal_Cycles = ideal_delay_time / oneCycle;
-    cout << ideal_Cycles << endl;
+    std::cout << std::fixed << std::setprecision(0) << ideal_Cycles << std::endl;
 }
 
 int main() {
@@ -33,14 +34,22 @@ int main() {
 
     cout << "Enter Range of Cycles: ";
     cin >> range_of_cycles;
+    
     cout << endl;
 
     for (int i = 0; i <= 65534; ++i) {
         numberQueue.push(i);
     }
 
-    run();
-    cout << "Total numbers divisible by 37: " << total_options_found << endl;
+    for (int i = 38000; i <= 38050; ++i) {
+        numberQueue.push(i);
+    }
 
-    return 0;
+   run();
+  cout << "Total numbers divisible by 37: " << total_options_found << endl;
+
+   return 0;
 }
+
+
+

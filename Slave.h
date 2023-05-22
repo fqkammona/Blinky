@@ -6,8 +6,7 @@
 #define BLINKY_SLAVE_H
 
 void Slave(int id);
-void delayLong(int number, int id);
-void delayLong(int number, int id, int r29);
+void delayLong(int number, int r29);
 
 extern int cycle;
 

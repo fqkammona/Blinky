@@ -35,28 +35,48 @@ void Slave(int id) {
         lock_guard<mutex> lock(bufferMutex);  // Automatically locks the mutex
         buffer.push_back(count);                          // Write to the buffer
 
+        cout << count << endl;
+        for (int i = 0; i <= 256; ++i) {
+            delayLong(count, i);
 
-        delayLong(count, id);
-        /*for (int i = 0; i <= 256; ++i) {
-            delayLong(count, id, i);
-        }*/
+            if(cycle >= (ideal_Cycles - range_of_cycles) && cycle <= (ideal_Cycles + range_of_cycles)){
+                cout << "Slave " << id << " found count: " << count
+                << " r29: " << i << endl;
+                lock_guard<mutex> lock(divisibleBy37CountMutex); // Lock access to the counter
+                ++total_options_found;
+            }
+        }
     }
 }
 
-void delayLong(int count, int id, int r29){
-    /*if (count % 37 == 0) {
-        cout << "Slave " << id << " found a number divisible by 37: " << count << endl;
-        lock_guard<mutex> lock(divisibleBy37CountMutex); // Lock access to the counter
-        ++total_options_found;
-    }*/
+void delayLong(int tempCount, int r29Temp){
+    int count = tempCount;
 
-}
+    cycle = 12;
+    while (count > 0) { // 6
+        int r29 = r29Temp;
+        cycle = cycle + 1;
 
-void delayLong(int count, int id){
-    if (count % 37 == 0) {
-        cout << "Slave " << id << " found a number divisible by 37: " << count << endl;
-        lock_guard<mutex> lock(divisibleBy37CountMutex); // Lock access to the counter
-        ++total_options_found;
+        /* d2 */
+        while (r29 > 0) { //30
+           cycle++;// nop
+            r29 = r29 - 1; // dec
+            cycle++; // clock for dec
+
+            if (r29 != 0) { // brne d2
+                cycle = cycle + 2;
+            } else {
+                cycle++;
+            }
+        }
+        count--; // sbiw r31:r30 - 1
+        cycle = cycle + 2; // clock for sbiw
+
+        if (count != 0) { // brne d1
+            cycle = cycle + 2;
+        } else {
+            cycle = cycle + 1;
+        }
     }
 }
 
