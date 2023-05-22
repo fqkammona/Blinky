@@ -30,11 +30,11 @@ int main() {
     cout << "Enter Ideal Delay: ";
     cin >> ideal_delay_time;
 
-    findNumberOfCycles(frequency, ideal_delay_time);
-
     cout << "Enter Range of Cycles: ";
     cin >> range_of_cycles;
-    
+    cout << endl;
+
+    findNumberOfCycles(frequency, ideal_delay_time);
     cout << endl;
 
     for (int i = 0; i <= 65534; ++i) {
@@ -45,10 +45,10 @@ int main() {
         numberQueue.push(i);
     }
 
-   run();
-  cout << "Total numbers divisible by 37: " << total_options_found << endl;
+    run();
+    cout << "Total Options Found: " << total_options_found << endl;
 
-   return 0;
+    return 0;
 }
 
 
