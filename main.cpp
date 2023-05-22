@@ -41,10 +41,6 @@ int main() {
         numberQueue.push(i);
     }
 
-    for (int i = 38000; i <= 38050; ++i) {
-        numberQueue.push(i);
-    }
-
     run();
     cout << "Total Options Found: " << total_options_found << endl;
 

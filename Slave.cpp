@@ -42,6 +42,7 @@ void Slave(int id) {
             if(cycle >= (ideal_Cycles - range_of_cycles) && cycle <= (ideal_Cycles + range_of_cycles)){
                 cout << "Slave " << id << " found count: " << count
                 << " r29: " << i << endl;
+                cout << "FOUND FOUND FOUND" << endl;
                 lock_guard<mutex> lock(divisibleBy37CountMutex); // Lock access to the counter
                 ++total_options_found;
             }
@@ -51,32 +52,29 @@ void Slave(int id) {
 
 void delayLong(int tempCount, int r29Temp){
     int count = tempCount;
-
     cycle = 12;
-    while (count > 0) { // 6
+
+    while (count > 0) {
         int r29 = r29Temp;
         cycle = cycle + 1;
 
         /* d2 */
-        while (r29 > 0) { //30
-           cycle++;// nop
-            r29 = r29 - 1; // dec
-            cycle++; // clock for dec
+        while (r29 > 0) {
+           cycle++;                 // nop
+            r29 = r29 - 1;          // dec
+            cycle++;                // clock for dec
 
-            if (r29 != 0) { // brne d2
+            cycle += (r29 != 0) ? 2 : 1;    // Brne d2
+            /*
+            if (r29 != 0) {
                 cycle = cycle + 2;
             } else {
                 cycle++;
-            }
+            }*/
         }
-        count--; // sbiw r31:r30 - 1
-        cycle = cycle + 2; // clock for sbiw
-
-        if (count != 0) { // brne d1
-            cycle = cycle + 2;
-        } else {
-            cycle = cycle + 1;
-        }
+        count--;                    // sbiw r31:r30 - 1
+        cycle = cycle + 2;          // clock for sbiw
+        cycle += (count != 0) ? 2 : 1;      //Bren d1
     }
 }
 
