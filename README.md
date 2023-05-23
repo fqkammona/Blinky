@@ -1,3 +1,5 @@
+Uses a master/slave relationship to find the desire output. 
+
 Given:
 -
 - frequency = 16MHz 
