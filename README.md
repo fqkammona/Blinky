@@ -19,3 +19,11 @@ Output:
 - High int: 
 - Low int:
 - Print out Blinky code 
+
+TOdo:
+-
+- Implement data structor 
+- implement writing and reading from textfile
+  - have it save the data structor to the file 
+  - have it remember which line it read last so when the 
+  - program ends it knows where to start again. 
