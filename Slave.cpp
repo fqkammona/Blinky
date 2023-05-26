@@ -20,6 +20,7 @@ extern double ideal_Cycles;
 extern double range_of_cycles;
 
 int cycle = 0;
+std::vector<Data> dataVector; // Define dataVector
 
 void Slave(int id) {
     while (true) {
@@ -41,13 +42,19 @@ void Slave(int id) {
 
             if(cycle >= (ideal_Cycles - range_of_cycles) && cycle <= (ideal_Cycles + range_of_cycles)){
                 cout << "Slave " << id << " found count: " << count
-                << " r29: " << i << endl;
+                << " r29: " << i << " Cycle: " << cycle << endl;
                 cout << "FOUND FOUND FOUND" << endl;
+
+                // Store count, cycle and r29 in a Data instance and add it to the vector
+                Data data = {count, cycle, i};
+                dataVector.push_back(data);
+
                 lock_guard<mutex> lock(divisibleBy37CountMutex); // Lock access to the counter
                 ++total_options_found;
             }
         }
     }
+
 }
 
 void delayLong(int tempCount, int r29Temp){
@@ -65,12 +72,6 @@ void delayLong(int tempCount, int r29Temp){
             cycle++;                // clock for dec
 
             cycle += (r29 != 0) ? 2 : 1;    // Brne d2
-            /*
-            if (r29 != 0) {
-                cycle = cycle + 2;
-            } else {
-                cycle++;
-            }*/
         }
         count--;                    // sbiw r31:r30 - 1
         cycle = cycle + 2;          // clock for sbiw

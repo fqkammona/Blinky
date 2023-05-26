@@ -42,6 +42,7 @@ int main() {
     }
 
     run();
+
     cout << "Total Options Found: " << total_options_found << endl;
 
     return 0;
