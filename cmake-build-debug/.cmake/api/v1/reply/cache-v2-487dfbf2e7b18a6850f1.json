@@ -11,7 +11,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/fatimakammona/CLionProjects/Blinky/cmake-build-debug"
+			"value" : "/Users/fatimakammona/git-rep/Blinky/cmake-build-debug"
 		},
 		{
 			"name" : "Blinky_IS_TOP_LEVEL",
@@ -35,7 +35,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/fatimakammona/CLionProjects/Blinky"
+			"value" : "/Users/fatimakammona/git-rep/Blinky"
 		},
 		{
 			"name" : "CMAKE_ADDR2LINE",
@@ -91,7 +91,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/Users/fatimakammona/CLionProjects/Blinky/cmake-build-debug"
+			"value" : "/Users/fatimakammona/git-rep/Blinky/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -515,7 +515,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/fatimakammona/CLionProjects/Blinky/cmake-build-debug/CMakeFiles/pkgRedirects"
+			"value" : "/Users/fatimakammona/git-rep/Blinky/cmake-build-debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -575,7 +575,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/Users/fatimakammona/CLionProjects/Blinky"
+			"value" : "/Users/fatimakammona/git-rep/Blinky"
 		},
 		{
 			"name" : "CMAKE_INSTALL_NAME_TOOL",

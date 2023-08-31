@@ -40,6 +40,7 @@ int main() {
     for (int i = 0; i <= 65534; i += 1000) { // 65534
         numberQueue.push(i);
     }
+// testing pushing     
 // 100 - Max: 102811 Min: 511
 // 1000 - Max: 1028011 Min: 5011
 // 5000 - Max: 5140011 Min: 25011

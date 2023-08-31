@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/Users/fatimakammona/CLionProjects/Blinky/cmake-build-debug",
-		"source" : "/Users/fatimakammona/CLionProjects/Blinky"
+		"build" : "/Users/fatimakammona/git-rep/Blinky/cmake-build-debug",
+		"source" : "/Users/fatimakammona/git-rep/Blinky"
 	},
 	"version" : 
 	{
