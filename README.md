@@ -1,7 +1,7 @@
 Project Description:
 -
 Uses a master/slave relationship to find the desire output. 
-
+testing 
 Given:
 -
 - frequency = 16MHz 
