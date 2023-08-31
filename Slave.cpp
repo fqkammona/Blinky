@@ -36,11 +36,10 @@ void Slave(int id) {
         lock_guard<mutex> lock(bufferMutex);  // Automatically locks the mutex
         buffer.push_back(count);                          // Write to the buffer
 
-        cout << count << endl;
         for (int i = 0; i <= 256; ++i) {
             delayLong(count, i);
 
-            if(cycle >= (ideal_Cycles - range_of_cycles) && cycle <= (ideal_Cycles + range_of_cycles)){
+            if(cycle == ideal_Cycles){
                 cout << "Slave " << id << " found count: " << count
                 << " r29: " << i << " Cycle: " << cycle << endl;
                 cout << "FOUND FOUND FOUND" << endl;
