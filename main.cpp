@@ -37,7 +37,7 @@ int main() {
     cout << endl;
 
     // finding the bounds
-    for (int i = 0; i <= 65534; i += 10000) {
+    for (int i = 0; i <= 65534; i += 1000) { // 65534
         numberQueue.push(i);
     }
 // 100 - Max: 102811 Min: 511

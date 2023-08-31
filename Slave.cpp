@@ -41,7 +41,15 @@ void Slave(int id) {
         double maxCycle = 0;
         int boundR = 1000000000;
         int minR = 0;
-        for (int i = 0; i <= 256; ++i) { // 256
+        int top_bound;
+
+        if(found_bounds){
+             top_bound = 256;
+        }else{
+             top_bound = 256;
+        }
+
+        for (int i = 0; i <= top_bound; ++i) { // 256
             delayLong(count, i);
 
             if(cycle == ideal_Cycles){
@@ -63,6 +71,7 @@ void Slave(int id) {
         }
 
         if(!found_bounds){
+            if(boundR == 1000000000) boundR = 256;
             Bounds bound = {count, boundR};
             boundsVector.push_back(bound);
         }
