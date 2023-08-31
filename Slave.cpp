@@ -17,10 +17,11 @@ extern int total_options_found;
 extern mutex divisibleBy37CountMutex;
 
 extern double ideal_Cycles;
-extern double range_of_cycles;
+extern bool found_bounds;
 
 int cycle = 0;
 std::vector<Data> dataVector; // Define dataVector
+std::vector<Bounds> boundsVector; // Define dataVector
 
 void Slave(int id) {
     while (true) {
@@ -36,7 +37,11 @@ void Slave(int id) {
         lock_guard<mutex> lock(bufferMutex);  // Automatically locks the mutex
         buffer.push_back(count);                          // Write to the buffer
 
-        for (int i = 0; i <= 256; ++i) {
+        double minCycle = 1000000000;
+        double maxCycle = 0;
+        int boundR = 1000000000;
+        int minR = 0;
+        for (int i = 0; i <= 256; ++i) { // 256
             delayLong(count, i);
 
             if(cycle == ideal_Cycles){
@@ -50,8 +55,19 @@ void Slave(int id) {
 
                 lock_guard<mutex> lock(divisibleBy37CountMutex); // Lock access to the counter
                 ++total_options_found;
-            }
+            } else if((cycle >= ideal_Cycles) & (boundR > i)) boundR = i;
+
+
+            if(minCycle > cycle) minCycle = cycle;
+            if(maxCycle < cycle) maxCycle = cycle;
         }
+
+        if(!found_bounds){
+            Bounds bound = {count, boundR};
+            boundsVector.push_back(bound);
+        }
+
+        cout << "Max: " << maxCycle << " Min: " << minCycle << " r29: " << boundR << endl;
     }
 
 }

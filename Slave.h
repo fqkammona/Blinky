@@ -13,7 +13,13 @@ struct Data {
     int r29;
 };
 
+struct Bounds {
+    int count;
+    int maxR29;
+};
+
 extern std::vector<Data> dataVector; // Declare dataVector as extern
+extern std::vector<Bounds> boundsVector;
 
 void Slave(int id);
 void delayLong(int number, int r29);
