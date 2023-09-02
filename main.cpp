@@ -17,6 +17,7 @@ mutex divisibleBy37CountMutex;
 double ideal_Cycles;
 bool found_bounds;
 int top_bound;
+int bottom_bound;
 
 void findNumberOfCycles(double ideal_delay_time){
     found_bounds = false;
@@ -61,7 +62,8 @@ int main() {
     int pastCycle = 0;
 
     for (const auto& bound : boundsVector) {
-        std::cout << "Count: " << bound.count << ", MaxCycle: " << bound.maxCycle << ", MaxR29: " << bound.maxR29 << std::endl;
+        std::cout << "Count: " << bound.count << ", MaxCycle: " << bound.maxCycle << ", MaxR29: " << bound.maxR29
+                << ", MinR29: " << bound.minR29 << std::endl;
         if(pastCycle < ideal_Cycles && bound.maxCycle > ideal_Cycles){
             startingCount = bound.count;
         }

@@ -17,6 +17,7 @@ struct Bounds {
     int count;
     int maxCycle;
     int maxR29;
+    int minR29;
 };
 
 extern std::vector<Data> dataVector; // Declare dataVector as extern
@@ -25,6 +26,7 @@ extern std::vector<Bounds> boundsVector;
 void Slave(int id);
 void delayLong(int number, int r29);
 int findTopBound(int searchCount);
+int findBottomBound(int searchCount);
 
 extern int cycle;
 
