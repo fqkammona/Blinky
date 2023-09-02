@@ -16,6 +16,7 @@ int total_options_found = 0;
 mutex divisibleBy37CountMutex;
 double ideal_Cycles;
 bool found_bounds;
+int top_bound;
 
 void findNumberOfCycles(double ideal_delay_time){
     found_bounds = false;
@@ -37,10 +38,10 @@ int main() {
     cout << endl;
 
     // finding the bounds
-    for (int i = 0; i <= 65534; i += 1000) { // 65534
+    for (int i = 0; i <= 65534; i += 500) { // 65534
         numberQueue.push(i);
     }
-// testing pushing     
+// testing pushing
 // 100 - Max: 102811 Min: 511
 // 1000 - Max: 1028011 Min: 5011
 // 5000 - Max: 5140011 Min: 25011
@@ -62,7 +63,7 @@ int main() {
     }
 
 
-    for (int i = 20000; i <= 65534; i++) {
+    for (int i = 0; i <= 65534; i++) {
         numberQueue.push(i);
     }
 

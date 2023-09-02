@@ -23,6 +23,7 @@ extern std::vector<Bounds> boundsVector;
 
 void Slave(int id);
 void delayLong(int number, int r29);
+int findTopBound(int searchCount);
 
 extern int cycle;
 

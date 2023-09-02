@@ -18,6 +18,7 @@ extern mutex divisibleBy37CountMutex;
 
 extern double ideal_Cycles;
 extern bool found_bounds;
+extern int top_bound;
 
 int cycle = 0;
 std::vector<Data> dataVector; // Define dataVector
@@ -40,34 +41,62 @@ void Slave(int id) {
         double minCycle = 1000000000;
         double maxCycle = 0;
         int boundR = 1000000000;
-        int minR = 0;
-        int top_bound;
 
         if(found_bounds){
-             top_bound = 256;
-        }else{
-             top_bound = 256;
+            if(count % 500 == 0){
+                top_bound = findTopBound(count);
+                if(top_bound == 1000000000 || top_bound == -1) top_bound = 256;
+
+            }
+        }else {
+            top_bound = 256;
         }
 
-        for (int i = 0; i <= top_bound; ++i) { // 256
-            delayLong(count, i);
+        cout << "Count " << count << " Top Bound: " << top_bound << endl;
+        if(!found_bounds){
+            for (int i = 0; i <= top_bound; ++i) { // 256
+                delayLong(count, i);
 
-            if(cycle == ideal_Cycles){
-                cout << "Slave " << id << " found count: " << count
-                << " r29: " << i << " Cycle: " << cycle << endl;
-                cout << "FOUND FOUND FOUND" << endl;
+                if(cycle == ideal_Cycles){
+                    cout << "Slave " << id << " found count: " << count
+                         << " r29: " << i << " Cycle: " << cycle << endl;
+                    cout << "FOUND FOUND FOUND" << endl;
 
-                // Store count, cycle and r29 in a Data instance and add it to the vector
-                Data data = {count, cycle, i};
-                dataVector.push_back(data);
+                    // Store count, cycle and r29 in a Data instance and add it to the vector
+                    Data data = {count, cycle, i};
+                    dataVector.push_back(data);
 
-                lock_guard<mutex> lock(divisibleBy37CountMutex); // Lock access to the counter
-                ++total_options_found;
-            } else if((cycle >= ideal_Cycles) & (boundR > i)) boundR = i;
+                    lock_guard<mutex> lock(divisibleBy37CountMutex); // Lock access to the counter
+                    ++total_options_found;
+                } else if((cycle >= ideal_Cycles) & (boundR > i)) boundR = i;
 
+                if(minCycle > cycle) minCycle = cycle;
+                if(maxCycle < cycle) maxCycle = cycle;
+            }
+        }else{
+            int i = top_bound;
+            while(maxCycle <= ideal_Cycles && i > 0){
+                delayLong(count, i);
 
-            if(minCycle > cycle) minCycle = cycle;
-            if(maxCycle < cycle) maxCycle = cycle;
+                if(cycle == ideal_Cycles){
+                    cout << "Slave " << id << " found count: " << count
+                         << " r29: " << i << " Cycle: " << cycle << endl;
+                    cout << "FOUND FOUND FOUND" << endl;
+
+                    // Store count, cycle and r29 in a Data instance and add it to the vector
+                    Data data = {count, cycle, i};
+                    dataVector.push_back(data);
+
+                    lock_guard<mutex> lock(divisibleBy37CountMutex); // Lock access to the counter
+                    ++total_options_found;
+                } else if((cycle >= ideal_Cycles) & (boundR > i)) boundR = i;
+
+                if(minCycle > cycle) minCycle = cycle;
+                if(maxCycle < cycle) maxCycle = cycle;
+
+                if(maxCycle < cycle) maxCycle = cycle;
+                i--;
+            }
         }
 
         if(!found_bounds){
@@ -76,9 +105,21 @@ void Slave(int id) {
             boundsVector.push_back(bound);
         }
 
+
         cout << "Max: " << maxCycle << " Min: " << minCycle << " r29: " << boundR << endl;
     }
 
+}
+
+
+
+int findTopBound(int searchCount) {
+    for (const auto& bound : boundsVector) {
+        if (bound.count == searchCount) {
+            return bound.maxR29;
+        }
+    }
+    return -1; // Return -1 if not found
 }
 
 void delayLong(int tempCount, int r29Temp){
