@@ -15,6 +15,7 @@ struct Data {
 
 struct Bounds {
     int count;
+    int maxCycle;
     int maxR29;
 };
 

@@ -38,80 +38,52 @@ void Slave(int id) {
         lock_guard<mutex> lock(bufferMutex);  // Automatically locks the mutex
         buffer.push_back(count);                          // Write to the buffer
 
-        double minCycle = 1000000000;
-        double maxCycle = 0;
+        int minCycle = 1000000000;
+        int maxCycle = 0;
         int boundR = 1000000000;
 
         if(found_bounds){
             if(count % 500 == 0){
                 top_bound = findTopBound(count);
                 if(top_bound == 1000000000 || top_bound == -1) top_bound = 256;
-
             }
         }else {
             top_bound = 256;
         }
 
         cout << "Count " << count << " Top Bound: " << top_bound << endl;
-        if(!found_bounds){
-            for (int i = 0; i <= top_bound; ++i) { // 256
-                delayLong(count, i);
 
-                if(cycle == ideal_Cycles){
-                    cout << "Slave " << id << " found count: " << count
-                         << " r29: " << i << " Cycle: " << cycle << endl;
-                    cout << "FOUND FOUND FOUND" << endl;
+        for (int i = 0; i <= top_bound; ++i) { // 256
+            delayLong(count, i);
 
-                    // Store count, cycle and r29 in a Data instance and add it to the vector
-                    Data data = {count, cycle, i};
-                    dataVector.push_back(data);
+            if(cycle == ideal_Cycles){
+                cout << "Slave " << id << " found count: " << count
+                << " r29: " << i << " Cycle: " << cycle << endl;
+                cout << "FOUND FOUND FOUND" << endl;
 
-                    lock_guard<mutex> lock(divisibleBy37CountMutex); // Lock access to the counter
-                    ++total_options_found;
-                } else if((cycle >= ideal_Cycles) & (boundR > i)) boundR = i;
+                // Store count, cycle and r29 in a Data instance and add it to the vector
+                Data data = {count, cycle, i};
+                dataVector.push_back(data);
 
-                if(minCycle > cycle) minCycle = cycle;
-                if(maxCycle < cycle) maxCycle = cycle;
+                lock_guard<mutex> lock(divisibleBy37CountMutex); // Lock access to the counter
+                ++total_options_found;
+            } else if((cycle >= ideal_Cycles) & (boundR > i)) {
+                boundR = i;
+                top_bound = boundR;
             }
-        }else{
-            int i = top_bound;
-            while(maxCycle <= ideal_Cycles && i > 0){
-                delayLong(count, i);
-
-                if(cycle == ideal_Cycles){
-                    cout << "Slave " << id << " found count: " << count
-                         << " r29: " << i << " Cycle: " << cycle << endl;
-                    cout << "FOUND FOUND FOUND" << endl;
-
-                    // Store count, cycle and r29 in a Data instance and add it to the vector
-                    Data data = {count, cycle, i};
-                    dataVector.push_back(data);
-
-                    lock_guard<mutex> lock(divisibleBy37CountMutex); // Lock access to the counter
-                    ++total_options_found;
-                } else if((cycle >= ideal_Cycles) & (boundR > i)) boundR = i;
-
-                if(minCycle > cycle) minCycle = cycle;
-                if(maxCycle < cycle) maxCycle = cycle;
-
-                if(maxCycle < cycle) maxCycle = cycle;
-                i--;
-            }
+            if(minCycle > cycle) minCycle = cycle;
+            if(maxCycle < cycle) maxCycle = cycle;
         }
 
         if(!found_bounds){
             if(boundR == 1000000000) boundR = 256;
-            Bounds bound = {count, boundR};
+            Bounds bound = {count, maxCycle, boundR};
             boundsVector.push_back(bound);
         }
 
-
         cout << "Max: " << maxCycle << " Min: " << minCycle << " r29: " << boundR << endl;
     }
-
 }
-
-
 
 int findTopBound(int searchCount) {
     for (const auto& bound : boundsVector) {

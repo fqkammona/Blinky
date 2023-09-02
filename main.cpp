@@ -21,12 +21,11 @@ int top_bound;
 void findNumberOfCycles(double ideal_delay_time){
     found_bounds = false;
     double oneCycle = 1.00 / 16000000;
-    ideal_Cycles = ideal_delay_time / oneCycle;
+   // ideal_Cycles = ideal_delay_time / oneCycle;
+    ideal_Cycles = 8672011;
     cout << "Cycles: ";
     std::cout << std::fixed << std::setprecision(0) << ideal_Cycles << std::endl;
 }
-
-
 
 int main() {
     double ideal_delay_time;
@@ -58,12 +57,18 @@ int main() {
     run();
 
     found_bounds = true;
+    int startingCount = 0;
+    int pastCycle = 0;
+
     for (const auto& bound : boundsVector) {
-        std::cout << "Count: " << bound.count << ", MaxR29: " << bound.maxR29 << std::endl;
+        std::cout << "Count: " << bound.count << ", MaxCycle: " << bound.maxCycle << ", MaxR29: " << bound.maxR29 << std::endl;
+        if(pastCycle < ideal_Cycles && bound.maxCycle > ideal_Cycles){
+            startingCount = bound.count;
+        }
+        pastCycle = bound.maxCycle;
     }
 
-
-    for (int i = 0; i <= 65534; i++) {
+    for (int i = startingCount; i <= 65534; i++) {
         numberQueue.push(i);
     }
 
